@@ -3,8 +3,12 @@ import styles from "./page.module.css";
 import { schema } from "@/type";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+
+  const router = useRouter();
+
   type UserFormData = {
     name: String,
     age: Number,
@@ -20,7 +24,6 @@ export default function Home() {
   
 
   const postResquest = async (data : UserFormData) => {
-    console.log("here")
     const response = await fetch('/api/user', {
       method: "POST",
       headers: {'Content-Type' : 'application/json'},
@@ -29,6 +32,12 @@ export default function Home() {
         age: data.age
       })
     })
+
+    if (response.ok) {
+      router.push("/dashboard");
+    } else {
+      console.log("Registration failed")
+    }
   }
 
   return (

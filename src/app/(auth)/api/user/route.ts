@@ -6,8 +6,6 @@ export async function POST (request: Request) {
   try {
     const body = await request.json();
 
-    console.log(body)
-
     const {name, age} = schema.parse(body)
 
     const newUser = await db.user.create({
