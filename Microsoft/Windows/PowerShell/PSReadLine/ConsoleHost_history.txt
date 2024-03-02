@@ -1,0 +1,5 @@
+npm run dev
+npm install zod
+npm install react-hook-form
+npm install @hookform/resolvers
+npm run dev
