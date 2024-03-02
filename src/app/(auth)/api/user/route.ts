@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { schema } from "@/type";
+import { db } from "@/lib/db";
 
 export async function POST (request: Request) {
   try {
@@ -9,7 +10,14 @@ export async function POST (request: Request) {
 
     const {name, age} = schema.parse(body)
 
-    return NextResponse.json({user: {name, age}, message: "User created successfully"}, {status: 201})
+    const newUser = await db.user.create({
+      data: {
+        name,
+        age
+      }
+    });
+
+    return NextResponse.json({user: newUser, message: "User created successfully"}, {status: 201})
   } catch (error) {
     return NextResponse.json({
       message: "Something went wrong"
